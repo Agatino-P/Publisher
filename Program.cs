@@ -2,13 +2,13 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Agicap.Contracts;
-using Microsoft.Extensions.Hosting;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using Publisher;
+using Microsoft.Extensions.Hosting;
 
-namespace GettingStarted
+namespace Publisher
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class Program
     {
         private const string QueueName = "MyQueue";
