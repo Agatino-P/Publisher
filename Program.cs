@@ -19,16 +19,22 @@ namespace Publisher
             IHost host = CreateHostBuilder(args).Build();
             IBus bus = host.Services.GetServices<IBus>().Single();
 
-            string inputChar = "";
-            Console.WriteLine("Q to exit");
+            string inputChar = "2";
+            Console.WriteLine("f to fail, q to exit");
+                inputChar = Console.ReadLine()?.ToLower();
             while (inputChar != "q")
             {
                 Console.WriteLine("Hello");
-                Guid id = Guid.NewGuid();
+
                 DateTime now = DateTime.Now;
+                DateTime failingDateTime= DateTime.Parse("2001-01-01");
+
+                DateTimeOffset paidTime = new(inputChar == "f" ? failingDateTime : now);
+
+                Guid id = Guid.NewGuid();
                 Console.WriteLine($"Id: {id}, date: {now}");
-                await bus.Publish<IPaymentPaid>(new {PaymentId = id, PaidDate = new DateTimeOffset(now)});
-                inputChar = Console.ReadLine();
+                await bus.Publish<IPaymentPaid>(new {PaymentId = id, PaidDate = paidTime});
+                inputChar = Console.ReadLine()?.ToLower();
             }
         }
 
